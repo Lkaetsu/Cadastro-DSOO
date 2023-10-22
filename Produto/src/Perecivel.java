@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Perecivel extends Produto{
 	private int[] validade;				//Definindo variavel de instancia
@@ -16,11 +17,10 @@ public class Perecivel extends Produto{
 	// Metodo que verifica se o produto esta vendido
 	public boolean estaVencido()
 	{
-		LocalDate date = LocalDate.parse(validade[0]+"-"+validade[1]+"-"+validade[2]);
+		String valistr = String.format("%02d",validade[0])+"-"+String.format("%02d",validade[1])+"-"+String.format("%04d",validade[2]);
+		LocalDate date = LocalDate.parse(valistr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		if((date).isBefore(LocalDate.now()))
 			return false;
-		else if(date.isAfter(LocalDate.now()))
-			return true;
 		else
 			return true;
 	}
@@ -37,6 +37,7 @@ public class Perecivel extends Produto{
 	// Metodo que retorna as informacoes do objeto
 	public String toString()
 	{
-		return super.toString()+" - Data de validade: "+ validade[0]+"/"+validade[1]+"/"+validade[2];
+		String valistr = String.format("%04d",validade[2])+"/"+String.format("%02d",validade[1])+"/"+String.format("%02d",validade[0]);
+		return super.toString()+" - Data de validade: "+ valistr;
 	}
 }
